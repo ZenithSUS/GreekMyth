@@ -4,7 +4,8 @@
         //Write query
         $sql = "SELECT * FROM greeks 
         JOIN user_groups ON greeks.greek_id = user_groups.greek_id 
-        WHERE user_groups.user_id = ? ORDER BY name LIMIT 8;";
+        WHERE user_groups.user_id = ? AND greeks.status = 1 
+        ORDER BY name LIMIT 8;";
         //Prepare statement
         $stmt = $conn->prepare($sql);
         //Bind parameters
@@ -116,7 +117,8 @@
         //Write query
         $sql = "SELECT * FROM greeks 
         JOIN user_groups ON greeks.greek_id = user_groups.greek_id 
-        WHERE user_groups.user_id = ? ORDER BY name";
+        WHERE user_groups.user_id = ? AND greeks.status = 1 
+        ORDER BY name";
         //Prepare statement
         $stmt = $conn->prepare($sql);
         //Bind parameters

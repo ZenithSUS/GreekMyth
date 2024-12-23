@@ -3,7 +3,8 @@
     function posts($conn) {  
         //Write query and join tables
         $sql = "SELECT *, greeks.name AS greek FROM posts JOIN users ON posts.author = users.user_id
-         LEFT JOIN greeks ON posts.greek_group = greeks.greek_id ORDER BY RAND()";
+         LEFT JOIN greeks ON posts.greek_group = greeks.greek_id WHERE posts.status = 1
+         ORDER BY RAND()";
         //Execute query
         $result = $conn->query($sql);
         //Display posts in random order
@@ -78,6 +79,7 @@
         //Write query and join tables
         $sql = "SELECT *, greeks.name AS greek FROM posts JOIN users ON posts.author = users.user_id
         LEFT JOIN greeks ON posts.greek_group = greeks.greek_id
+        WHERE posts.status = 1
         ORDER BY posts.created_at DESC";
         //Execute query
         $result = $conn->query($sql);
@@ -153,6 +155,7 @@
         $sql = "SELECT *, greeks.name AS greek FROM posts 
         JOIN users ON posts.author = users.user_id
         LEFT JOIN greeks ON greeks.greek_id = posts.greek_group
+        WHERE posts.status = 1
         ORDER BY likes DESC";
         //Execute query
         $result = $conn->query($sql);
@@ -235,6 +238,7 @@
         JOIN users ON posts.author = users.user_id
         LEFT JOIN comments ON posts.post_id = comments.post_id
         LEFT JOIN greeks ON posts.greek_group = greeks.greek_id
+        WHERE posts.status = 1
         GROUP BY posts.post_id
         ORDER BY total_comments DESC;";
         //Execute query
@@ -330,8 +334,6 @@
             
             //Execute query
             $stmt->execute();
-
-            
 
             //Get post id related to the user
             $sql = "SELECT post_id FROM posts WHERE author = '$author' AND title = '$title'";
