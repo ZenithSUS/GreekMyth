@@ -56,7 +56,7 @@
                     </form>";
 
                 //Get number of comments
-                $sql2 = "SELECT COALESCE(COUNT(*), 0) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "'";
+                $sql2 = "SELECT COALESCE(COUNT(*), 0) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "' AND status = 1";
                 $result2 = $conn->query($sql2);
                 $row2 = $result2->fetch_assoc();
 
@@ -133,7 +133,7 @@
                     </form>";
 
                 //Get number of comments
-                $sql2 = "SELECT count(*) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "'";
+                $sql2 = "SELECT count(*) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "' AND status = 1";
                 $result2 = $conn->query($sql2);
                 $row2 = $result2->fetch_assoc();
 
@@ -214,7 +214,7 @@
                 $sql2 = "SELECT COUNT(comments.comment_id) AS 
                 total_comments, posts.post_id FROM comments 
                 JOIN posts ON comments.post_id = posts.post_id
-                WHERE posts.post_id = '$postId'";
+                WHERE posts.post_id = '$postId' AND comments.status = 1";
                 $result2 = $conn->query($sql2);
                 $row2 = $result2->fetch_assoc();    
                 //Display comments
@@ -233,14 +233,16 @@
         //Left join to get total comments even if there are no comments
         //Group by post_id to get total comments
         //Order by total comments
-        $sql = "SELECT users.*, posts.*, greeks.name AS greek, COALESCE(COUNT(comments.comment_id), 0) AS total_comments
+        $sql = "SELECT users.*, posts.*, greeks.name AS greek, 
+        (SELECT COUNT(*) FROM comments 
+        WHERE comments.post_id = posts.post_id AND comments.status = 1) AS total_comments
         FROM posts
         JOIN users ON posts.author = users.user_id
-        LEFT JOIN comments ON posts.post_id = comments.post_id
         LEFT JOIN greeks ON posts.greek_group = greeks.greek_id
-        WHERE posts.status = 1
+        WHERE posts.status = 1 
         GROUP BY posts.post_id
         ORDER BY total_comments DESC;";
+
         //Execute query
         $result = $conn->query($sql);
         if($result !== false && $result->num_rows > 0) {
@@ -482,7 +484,8 @@
         $sql = "SELECT * FROM posts
         JOIN users ON posts.author = users.user_id
         LEFT JOIN greeks ON posts.greek_group = greeks.greek_id 
-        WHERE posts.author = ? ORDER BY created_at DESC";
+        WHERE posts.author = ? AND posts.status = 1
+        ORDER BY created_at DESC";
         //Prepare query
         $stmt = $conn->prepare($sql);
         //Bind parameters
@@ -538,7 +541,7 @@
                     </form>";
 
                 //Get number of comments
-                $sql2 = "SELECT COALESCE(COUNT(*), 0) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "'";
+                $sql2 = "SELECT COALESCE(COUNT(*), 0) AS total_comments FROM comments WHERE post_id = '" . $row['post_id'] . "' AND status = 1";
                 $result2 = $conn->query($sql2);
                 $row2 = $result2->fetch_assoc();
 

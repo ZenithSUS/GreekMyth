@@ -30,7 +30,7 @@
         <?php 
         //Check if title is set
         if(isset($_GET['title']) && !empty($_GET['title'])){
-            echo $_GET['title'];
+            echo '"' . htmlspecialchars($_GET['title'], ENT_QUOTES, 'UTF-8') . '"';
         } else {
             echo 'Post';
         }

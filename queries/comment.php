@@ -6,7 +6,8 @@
         //Write query and join tables to display comments
         $sql = "SELECT * FROM comments 
         JOIN users ON comments.author = users.user_id 
-        WHERE comments.post_id = '$postId' ORDER BY created_at DESC;";
+        WHERE comments.post_id = '$postId' AND comments.status = 1
+        ORDER BY created_at DESC;";
         //Execute query
         $result = $conn->query($sql);
         //Check if comments exist
