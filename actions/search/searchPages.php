@@ -13,7 +13,7 @@
     $searchQuery = $conn->real_escape_string($_GET['q']);
 
     //Write query
-    $sql = "SELECT greek_id, name, image_url FROM greeks WHERE name LIKE CONCAT('%', ?, '%')";
+    $sql = "SELECT greek_id, name, image_url FROM greeks WHERE name LIKE CONCAT('%', ?, '%') AND status = 1";
     //Prepare and Bind
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $searchQuery);

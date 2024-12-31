@@ -127,7 +127,7 @@
                 }
 
                 //Display likes and dislikes
-                echo "<form action='../actions/likes/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
+                echo "<form action='actions/likes/like_act.php?post_id=" . $row['post_id'] . "&type=" . $voteType . "' method='POST' class='vote'>
                         <p><button type='submit' name='likeForm'><img class='vote-emoji' src='img/misc/like.png' alt='like'> " . $row['likes'] . " </button></p>
                         <p><button type='submit' name='dislikeForm'><img class='vote-emoji' src='img/misc/dislike.png' alt='dislike'> " . $row['dislikes'] . " </button></p>
                     </form>";
