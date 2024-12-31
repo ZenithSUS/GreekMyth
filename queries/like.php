@@ -36,8 +36,7 @@
                 undoVote($conn, $postId, $userId, $type);
             }
         } else {
-            // User has not liked the post before
-            addVote($conn, $postId, null, $type);
+            addVote($conn, $postId, $type);
             // Call function insert like
             insertVote($conn, $postId, $userId, $type);
         }
@@ -87,8 +86,7 @@
                 undoVote($conn, $postId, $userId, $type);
             }
         } else {
-            // User has not disliked the post before
-            addVote($conn, $postId, null, $type);
+            addVote($conn, $postId, $type);
             // Call function insert dislike
             insertVote($conn, $postId, $userId, $type);
         }
@@ -101,33 +99,30 @@
     
 
     //Function to add likes to a post
-    function addVote($conn, $postId, $previousLikeType, $newLiketype) {
-            //Check if the previous like type is not the same as the new like type
-            if($previousLikeType !== $newLiketype) {
-                if($newLiketype == "like") {
-                    $sql = "UPDATE posts SET likes = likes + 1 WHERE post_id = ?";
-                    //Prepare statement
-                    $stmt = $conn->prepare($sql);
-                    //Bind parameters
-                    $stmt->bind_param("s", $postId);
-                    //Execute statement
-                    $stmt->execute();
-                    //Close statement
-                    $stmt->close();
-                }
+    function addVote($conn, $postId, $newLiketype) {
+        if($newLiketype == "like") {
+            $sql = "UPDATE posts SET likes = likes + 1 WHERE post_id = ?";
+             //Prepare statement
+            $stmt = $conn->prepare($sql);
+            //Bind parameters
+            $stmt->bind_param("s", $postId);
+            //Execute statement
+            $stmt->execute();
+            //Close statement
+            $stmt->close();
+        }
 
-                if($newLiketype == "dislike") {
-                    $sql = "UPDATE posts SET dislikes = dislikes + 1 WHERE post_id = ?";
-                    //Prepare statement
-                    $stmt = $conn->prepare($sql);
-                    //Bind parameters
-                    $stmt->bind_param("s", $postId);
-                    //Execute statement
-                    $stmt->execute();
-                    //Close statement
-                    $stmt->close();
-                }
-            }
+        if($newLiketype == "dislike") {
+            $sql = "UPDATE posts SET dislikes = dislikes + 1 WHERE post_id = ?";
+            //Prepare statement
+            $stmt = $conn->prepare($sql);
+            //Bind parameters
+            $stmt->bind_param("s", $postId);
+            //Execute statement
+            $stmt->execute();
+            //Close statement
+            $stmt->close();
+        }
     }
 
     //Function to insert like

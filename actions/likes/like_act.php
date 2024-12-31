@@ -9,11 +9,11 @@
     include "../../queries/like.php";
 
     //Get post id and user id
-    $postId = $_GET['post_id'];
+    $postId = $_GET['post_id'] ?? null;
     $userId = $_SESSION['user_id'];
 
     //Get type from url or using GET method
-    $type = $_GET['type'];
+    $type = $_GET['type'] ?? null;
 
     //Check if the user is logged in
     if(!isset($_SESSION['user_id'])) {
