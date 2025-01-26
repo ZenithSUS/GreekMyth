@@ -42,7 +42,7 @@
         //Write query
         $sql = "SELECT * FROM greeks 
         JOIN user_groups ON greeks.greek_id = user_groups.greek_id 
-        WHERE user_groups.user_id = ? ORDER BY name;";
+        WHERE user_groups.user_id = ? AND greeks.status = 1 ORDER BY name;";
         //Prepare statement
         $stmt = $conn->prepare($sql);
         //Bind parameters

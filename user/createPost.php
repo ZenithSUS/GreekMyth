@@ -173,7 +173,7 @@
                         </div>
                         <!-- Submit Button -->
                         <div class="createPost-btn">
-                            <button type="submit" name="createPost" id="postBtn">Post</button>
+                            <button type="submit" name="createPost" id="postBtn" onclick="disableButton()">Post</button>
                             <a href="../index.php" id="backBtn">Go back</a>
                         </div>
                     </form>
@@ -204,6 +204,10 @@
     <!--Scripts-->
     <script src="../scripts/search.js"></script>
     <script src="../scripts/burgerMenu.js"></script>
-
+    <script>
+        function disableButton() {
+            document.getElementById("postBtn").disabled = true;
+        }
+    </script>
 </body>
 </html>
